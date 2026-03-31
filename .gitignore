@@ -1,0 +1,16 @@
+*.env
+.env
+secrets/
+*.key
+*.pem
+*secret*
+*password*
+credentials/
+identity/
+*.sqlite
+*.bak*
+media/
+logs/
+cron/runs/
+workspace/data/
+.DS_Store

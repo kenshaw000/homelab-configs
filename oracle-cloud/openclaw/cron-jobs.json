@@ -1,0 +1,193 @@
+{
+  "version": 1,
+  "jobs": [
+    {
+      "id": "7f834a35-c1a9-4cdc-9a83-d24a2484d638",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "summary:morning",
+      "enabled": true,
+      "createdAtMs": 1774025497876,
+      "updatedAtMs": 1774962022440,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 8 * * *",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "Morning summary report requested."
+      },
+      "state": {
+        "nextRunAtMs": 1775048400000,
+        "lastRunAtMs": 1774962000065,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 22375,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "669b68a5-3644-4f0e-bd90-83dc3ec727a6",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "summary:evening",
+      "enabled": true,
+      "createdAtMs": 1774025500780,
+      "updatedAtMs": 1774911630352,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 18 * * *",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "Evening summary report requested."
+      },
+      "state": {
+        "nextRunAtMs": 1774998000000,
+        "lastRunAtMs": 1774911600042,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 30310,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "7dae0dde-a584-42b3-bd30-cd5fc9627ec8",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "healthcheck:security-audit",
+      "enabled": true,
+      "createdAtMs": 1774025508482,
+      "updatedAtMs": 1774879800678,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * 1",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "Weekly security audit requested."
+      },
+      "state": {
+        "nextRunAtMs": 1775484000000,
+        "lastRunAtMs": 1774879200668,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 600010,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 1,
+        "lastError": "cron: job execution timed out",
+        "lastErrorReason": "timeout"
+      }
+    },
+    {
+      "id": "b13ba787-2d7d-4ec0-8f7a-392f38e7fbe8",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "healthcheck:update-status",
+      "enabled": true,
+      "createdAtMs": 1774025511047,
+      "updatedAtMs": 1774880142046,
+      "schedule": {
+        "kind": "cron",
+        "expr": "15 9 * * 1",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "Weekly update status check requested."
+      },
+      "state": {
+        "nextRunAtMs": 1775484900000,
+        "lastRunAtMs": 1774880100042,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 42004,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "79a655d6-829a-4a10-a14d-49120931e845",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "Daily usage report",
+      "enabled": true,
+      "createdAtMs": 1774130696260,
+      "updatedAtMs": 1774940457471,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 2 * * *",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Run the daily usage report script. Execute: python3 /home/ubuntu/.openclaw/workspace/scripts/usage_report.py"
+      },
+      "delivery": {
+        "mode": "announce",
+        "to": "+17089270980",
+        "channel": "whatsapp"
+      },
+      "state": {
+        "nextRunAtMs": 1775026800000,
+        "lastRunAtMs": 1774940400706,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 56765,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 3,
+        "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default."
+      }
+    },
+    {
+      "id": "55a88c7e-4c00-4830-a05d-b48fc56726df",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "Cleanup old trace files",
+      "enabled": true,
+      "createdAtMs": 1774130701652,
+      "updatedAtMs": 1774771261817,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 3 * * 0",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Delete trace files older than 30 days. Execute: find /home/ubuntu/otel/data -name 'traces-*.jsonl' -mtime +30 -delete || echo 'No files deleted' && echo 'Cleanup done'"
+      },
+      "delivery": {
+        "mode": "announce",
+        "to": "+17089270980",
+        "channel": "whatsapp"
+      },
+      "state": {
+        "nextRunAtMs": 1775376000000,
+        "lastRunAtMs": 1774771200043,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 61774,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 2,
+        "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default."
+      }
+    }
+  ]
+}
