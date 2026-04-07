@@ -42,7 +42,12 @@
       "maxConcurrent": 4,
       "subagents": {
         "maxConcurrent": 8
-      }
+      },
+    "memorySearch": {
+	"enabled": true,
+	"provider": "ollama",
+	"model": "nomic-embed-text"
+	}
     }
   },
   "tools": {
