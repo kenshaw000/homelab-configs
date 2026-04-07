@@ -8,10 +8,10 @@
       "name": "summary:morning",
       "enabled": true,
       "createdAtMs": 1774025497876,
-      "updatedAtMs": 1774962022440,
+      "updatedAtMs": 1775559605728,
       "schedule": {
         "kind": "cron",
-        "expr": "0 8 * * *",
+        "expr": "0 6 * * *",
         "tz": "America/Chicago"
       },
       "sessionTarget": "main",
@@ -21,11 +21,11 @@
         "text": "Morning summary report requested."
       },
       "state": {
-        "nextRunAtMs": 1775048400000,
-        "lastRunAtMs": 1774962000065,
+        "nextRunAtMs": 1775646000000,
+        "lastRunAtMs": 1775559600023,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 22375,
+        "lastDurationMs": 5705,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -37,7 +37,7 @@
       "name": "summary:evening",
       "enabled": true,
       "createdAtMs": 1774025500780,
-      "updatedAtMs": 1774911630352,
+      "updatedAtMs": 1775516411620,
       "schedule": {
         "kind": "cron",
         "expr": "0 18 * * *",
@@ -50,11 +50,11 @@
         "text": "Evening summary report requested."
       },
       "state": {
-        "nextRunAtMs": 1774998000000,
-        "lastRunAtMs": 1774911600042,
+        "nextRunAtMs": 1775602800000,
+        "lastRunAtMs": 1775516400013,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 30310,
+        "lastDurationMs": 11607,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -66,7 +66,7 @@
       "name": "healthcheck:security-audit",
       "enabled": true,
       "createdAtMs": 1774025508482,
-      "updatedAtMs": 1774879800678,
+      "updatedAtMs": 1775484025529,
       "schedule": {
         "kind": "cron",
         "expr": "0 9 * * 1",
@@ -79,15 +79,13 @@
         "text": "Weekly security audit requested."
       },
       "state": {
-        "nextRunAtMs": 1775484000000,
-        "lastRunAtMs": 1774879200668,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 600010,
+        "nextRunAtMs": 1776088800000,
+        "lastRunAtMs": 1775484000016,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 25513,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 1,
-        "lastError": "cron: job execution timed out",
-        "lastErrorReason": "timeout"
+        "consecutiveErrors": 0
       }
     },
     {
@@ -97,7 +95,7 @@
       "name": "healthcheck:update-status",
       "enabled": true,
       "createdAtMs": 1774025511047,
-      "updatedAtMs": 1774880142046,
+      "updatedAtMs": 1775484925387,
       "schedule": {
         "kind": "cron",
         "expr": "15 9 * * 1",
@@ -110,11 +108,11 @@
         "text": "Weekly update status check requested."
       },
       "state": {
-        "nextRunAtMs": 1775484900000,
-        "lastRunAtMs": 1774880100042,
+        "nextRunAtMs": 1776089700000,
+        "lastRunAtMs": 1775484900015,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 42004,
+        "lastDurationMs": 25372,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -126,13 +124,13 @@
       "name": "Daily usage report",
       "enabled": true,
       "createdAtMs": 1774130696260,
-      "updatedAtMs": 1774940457471,
+      "updatedAtMs": 1775545200014,
       "schedule": {
         "kind": "cron",
         "expr": "0 2 * * *",
         "tz": "America/Chicago"
       },
-      "sessionTarget": "isolated",
+      "sessionTarget": "main",
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
@@ -144,14 +142,14 @@
         "channel": "whatsapp"
       },
       "state": {
-        "nextRunAtMs": 1775026800000,
-        "lastRunAtMs": 1774940400706,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 56765,
+        "nextRunAtMs": 1775631600000,
+        "lastRunAtMs": 1775545200013,
+        "lastRunStatus": "skipped",
+        "lastStatus": "skipped",
+        "lastDurationMs": 1,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 3,
-        "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default."
+        "consecutiveErrors": 0,
+        "lastError": "main job requires payload.kind=\"systemEvent\""
       }
     },
     {
@@ -161,13 +159,13 @@
       "name": "Cleanup old trace files",
       "enabled": true,
       "createdAtMs": 1774130701652,
-      "updatedAtMs": 1774771261817,
+      "updatedAtMs": 1775376057310,
       "schedule": {
         "kind": "cron",
         "expr": "0 3 * * 0",
         "tz": "America/Chicago"
       },
-      "sessionTarget": "isolated",
+      "sessionTarget": "main",
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
@@ -179,14 +177,151 @@
         "channel": "whatsapp"
       },
       "state": {
-        "nextRunAtMs": 1775376000000,
-        "lastRunAtMs": 1774771200043,
+        "nextRunAtMs": 1775980800000,
+        "lastRunAtMs": 1775376000013,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 61774,
+        "lastDurationMs": 57297,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 2,
+        "consecutiveErrors": 3,
         "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default."
+      }
+    },
+    {
+      "id": "3f67dbc3-848c-4b02-b3db-d3994d6ac861",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "Dale Cooper Morning Brief",
+      "enabled": true,
+      "createdAtMs": 1775170829578,
+      "updatedAtMs": 1775559679457,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 6 * * *",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Read /home/ubuntu/.openclaw/workspace/cooper_identity.md for your persona and guidelines. Then execute: python3 /home/ubuntu/.openclaw/workspace/scripts/linkedin_job_search.py --morning. Provide the brief as your output.",
+        "model": "openrouter/stepfun/step-3.5-flash:free"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "whatsapp",
+        "to": "+17089270980"
+      },
+      "state": {
+        "nextRunAtMs": 1775646000000,
+        "lastRunAtMs": 1775559605728,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 73729,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1,
+        "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default."
+      }
+    },
+    {
+      "id": "a476f802-283b-45e8-bad4-1fef4a328485",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "Dale Cooper Evening Brief",
+      "enabled": true,
+      "createdAtMs": 1775170832881,
+      "updatedAtMs": 1775533862786,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 18 * * *",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Read /home/ubuntu/.openclaw/workspace/cooper_identity.md for your persona and guidelines. Then execute: python3 /home/ubuntu/.openclaw/workspace/scripts/linkedin_job_search.py --evening. Provide the brief as your output.",
+        "model": "openrouter/stepfun/step-3.5-flash:free"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "whatsapp",
+        "to": "+17089270980"
+      },
+      "state": {
+        "nextRunAtMs": 1775602800000,
+        "lastRunAtMs": 1775516411620,
+        "lastRunStatus": "skipped",
+        "lastStatus": "skipped",
+        "lastDurationMs": 0,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 0,
+        "lastError": "main job requires payload.kind=\"systemEvent\""
+      }
+    },
+    {
+      "id": "3435c6d2-e039-47af-9f7e-5cd040715cba",
+      "name": "Tinley Park News Test",
+      "enabled": false,
+      "deleteAfterRun": true,
+      "createdAtMs": 1775410713830,
+      "updatedAtMs": 1775412949561,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-04-05T18:15:00.000Z"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Execute: python3 /home/ubuntu/.openclaw/workspace/scripts/tinley_news_test.py"
+      },
+      "delivery": {
+        "mode": "announce",
+        "to": "+17089270980",
+        "channel": "whatsapp"
+      },
+      "state": {
+        "lastRunAtMs": 1775412900017,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 49544,
+        "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default.",
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1
+      }
+    },
+    {
+      "id": "a1b2c3d4-e5f6-7890-a1b2-c3d4e5f67890",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "Tinley Park News Test (retry)",
+      "enabled": false,
+      "createdAtMs": 1775415000000,
+      "updatedAtMs": 1775416500015,
+      "schedule": {
+        "kind": "at",
+        "at": "2026-04-05T19:15:00.000Z"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Execute: python3 /home/ubuntu/.openclaw/workspace/scripts/tinley_news_test.py"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "whatsapp",
+        "to": "+17089270980"
+      },
+      "state": {
+        "lastRunAtMs": 1775416500015,
+        "lastRunStatus": "skipped",
+        "lastStatus": "skipped",
+        "lastDurationMs": 0,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 0,
+        "lastError": "main job requires payload.kind=\"systemEvent\""
       }
     }
   ]

@@ -1,14 +1,18 @@
 {
   "meta": {
     "lastTouchedVersion": "2026.3.13",
-    "lastTouchedAt": "2026-03-20T19:48:43.510Z"
+    "lastTouchedAt": "2026-03-31T21:33:31.040Z"
   },
   "wizard": {
-    "lastRunAt": "2026-03-20T13:22:10.738Z",
+    "lastRunAt": "2026-03-31T21:33:30.926Z",
     "lastRunVersion": "2026.3.13",
     "lastRunCommand": "configure",
     "lastRunMode": "local"
   },
+
+
+
+
   "auth": {
     "profiles": {
       "openrouter:default": {
@@ -22,7 +26,7 @@
       "model": {
         "primary": "openrouter/stepfun/step-3.5-flash:free",
         "fallbacks": [
-          "openrouter/stepfun/step-3.5-flash:free"
+          "openrouter/auto"
         ]
       },
       "models": {
@@ -42,16 +46,7 @@
     }
   },
   "tools": {
-    "profile": "coding",
-    "deny": [
-      "group:web",
-      "browser"
-    ],
-    "web": {
-      "search": {
-        "provider": "brave"
-      }
-    }
+    "profile": "coding"
   },
   "messages": {
     "ackReactionScope": "group-mentions"
@@ -86,18 +81,20 @@
       "allowFrom": [
         "+17089270980"
       ],
-      "groupPolicy": "open",
-      "debounceMs": 0,
+      "groupPolicy": "allowlist",
+      "debounceMs": 500,
       "mediaMaxMb": 50
     },
     "synology-chat": {
       "enabled": true,
-      "allowInsecureSsl": true,
-      "incomingUrl": "https://192.168.86.26:5001/webapi/entry.cgi?api=SYNO.Chat.External&method=chatbot&version=2&token=bzGcmwQr80pn5vXtH0swEcrlumoGswclJDxQdhImZth2b4vbLDoCnjQqcepr2lt7",
-      "token": "bzGcmwQr80pn5vXtH0swEcrlumoGswclJDxQdhImZth2b4vbLDoCnjQqcepr2lt7",
+      "allowInsecureSsl": false,
+      "incomingUrl": "https://192-168-86-26.kenshaw000.direct.quickconnect.to:5001/webapi/entry.cgi?api=SYNO.Chat.External&method=chatbot&version=2&token=${SYNOLOGY_CHAT_TOKEN}",
+      "token": { "source": "env", "provider": "default", "id": "SYNOLOGY_CHAT_TOKEN" },
       "dmPolicy": "allowlist",
-      "allowedUserIds": [
-        "4"
+      "allowFrom": [
+        "1027"
+      ],      "allowedUserIds": [
+        "1027"
       ]
     }
   },
@@ -107,10 +104,10 @@
     "bind": "loopback",
     "auth": {
       "mode": "token",
-      "token": "J3v8gE+XSGG8xQX+9E0B+qS0aS2N+k5h3V6tY7xL7yU="
+      "token": { "source": "env", "provider": "default", "id": "OPENCLAW_GATEWAY_TOKEN" }
     },
     "tailscale": {
-      "mode": "off",
+      "mode": "serve",
       "resetOnExit": false
     }
   },
