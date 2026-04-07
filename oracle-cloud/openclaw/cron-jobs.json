@@ -189,7 +189,7 @@
     },
     {
       "id": "3f67dbc3-848c-4b02-b3db-d3994d6ac861",
-      "agentId": "main",
+      "agentId": null,
       "sessionKey": "agent:main:whatsapp:direct:+17089270980",
       "name": "Dale Cooper Morning Brief",
       "enabled": true,
@@ -225,7 +225,7 @@
     },
     {
       "id": "a476f802-283b-45e8-bad4-1fef4a328485",
-      "agentId": "main",
+      "agentId": null,
       "sessionKey": "agent:main:whatsapp:direct:+17089270980",
       "name": "Dale Cooper Evening Brief",
       "enabled": true,
@@ -322,6 +322,34 @@
         "lastDeliveryStatus": "unknown",
         "consecutiveErrors": 0,
         "lastError": "main job requires payload.kind=\"systemEvent\""
+      }
+    },
+    {
+      "id": "job-validation-20260407",
+      "agentId": "main",
+      "sessionKey": "agent:main:whatsapp:direct:+17089270980",
+      "name": "Job Tracker Validation",
+      "enabled": true,
+      "createdAtMs": 1775593507627,
+      "updatedAtMs": 1775593507627,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9 * * 5",
+        "tz": "America/Chicago"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "Execute: python3 /home/ubuntu/.openclaw/workspace/scripts/validate_jobs.py"
+      },
+      "delivery": {
+        "mode": "announce",
+        "to": "+17089270980",
+        "channel": "whatsapp"
+      },
+      "state": {
+        "nextRunAtMs": 1775829600000
       }
     }
   ]

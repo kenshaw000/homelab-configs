@@ -61,16 +61,53 @@ def load_tracker() -> List[Dict[str, Any]]:
     if TRACKER_PATH.exists():
         try:
             with open(TRACKER_PATH) as f:
-                return json.load(f)
+                data = json.load(f)
+                # Support both formats: simple list OR dict with 'active' array
+                if isinstance(data, dict):
+                    active = data.get('active', [])
+                    # Also include 'expired' for deduplication window
+                    expired = data.get('expired', [])
+                    return active + expired
+                elif isinstance(data, list):
+                    return data
+                else:
+                    return []
         except (json.JSONDecodeError, IOError) as e:
             logger.warning(f"Failed to load tracker: {e}. Starting fresh.")
     return []
 
 def save_tracker(tracker: List[Dict[str, Any]]) -> None:
-    """Save tracker atomically."""
+    """Save tracker atomically. Maintains active/expired structure based on 'active' flag."""
+    # Load existing to preserve expired section
+    existing = {"active": [], "expired": [], "last_checked": datetime.utcnow().isoformat() + 'Z', "total_original": len(tracker)}
+    if TRACKER_PATH.exists():
+        try:
+            with open(TRACKER_PATH) as f:
+                existing = json.load(f)
+        except Exception:
+            pass
+
+    # Filter current tracker into active/expired
+    active = []
+    expired = []
+    for job in tracker:
+        if job.get('active', True) is False:
+            expired.append(job)
+        else:
+            active.append(job)
+
+    # Build new structure
+    new_data = {
+        "active": active,
+        "expired": existing.get("expired", []),  # keep historical expired
+        "last_checked": datetime.utcnow().isoformat() + 'Z',
+        "total_original": len(tracker)
+    }
+
+    # Save atomically
     temp_path = TRACKER_PATH.with_suffix('.tmp')
     with open(temp_path, 'w') as f:
-        json.dump(tracker, f, indent=2)
+        json.dump(new_data, f, indent=2)
     temp_path.replace(TRACKER_PATH)
 
 def log_entry(entry: Dict[str, Any]) -> None:
