@@ -8,7 +8,7 @@
       "name": "summary:morning",
       "enabled": true,
       "createdAtMs": 1774025497876,
-      "updatedAtMs": 1775646014005,
+      "updatedAtMs": 1775732402099,
       "schedule": {
         "kind": "cron",
         "expr": "0 6 * * *",
@@ -21,11 +21,11 @@
         "text": "Morning summary report requested."
       },
       "state": {
-        "nextRunAtMs": 1775732400000,
-        "lastRunAtMs": 1775646000016,
+        "nextRunAtMs": 1775818800000,
+        "lastRunAtMs": 1775732400016,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 13989,
+        "lastDurationMs": 2083,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -37,7 +37,7 @@
       "name": "summary:evening",
       "enabled": true,
       "createdAtMs": 1774025500780,
-      "updatedAtMs": 1775602818698,
+      "updatedAtMs": 1775689213232,
       "schedule": {
         "kind": "cron",
         "expr": "0 18 * * *",
@@ -50,11 +50,11 @@
         "text": "Evening summary report requested."
       },
       "state": {
-        "nextRunAtMs": 1775689200000,
-        "lastRunAtMs": 1775602800014,
+        "nextRunAtMs": 1775775600000,
+        "lastRunAtMs": 1775689200014,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 18684,
+        "lastDurationMs": 13218,
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 0
       }
@@ -124,7 +124,7 @@
       "name": "Daily usage report",
       "enabled": true,
       "createdAtMs": 1774130696260,
-      "updatedAtMs": 1775631600021,
+      "updatedAtMs": 1775718000021,
       "schedule": {
         "kind": "cron",
         "expr": "0 2 * * *",
@@ -142,8 +142,8 @@
         "channel": "whatsapp"
       },
       "state": {
-        "nextRunAtMs": 1775718000000,
-        "lastRunAtMs": 1775631600020,
+        "nextRunAtMs": 1775804400000,
+        "lastRunAtMs": 1775718000020,
         "lastRunStatus": "skipped",
         "lastStatus": "skipped",
         "lastDurationMs": 1,
@@ -194,7 +194,7 @@
       "name": "Dale Cooper Morning Brief",
       "enabled": true,
       "createdAtMs": 1775170829578,
-      "updatedAtMs": 1775646036088,
+      "updatedAtMs": 1775732437826,
       "schedule": {
         "kind": "cron",
         "expr": "0 6 * * *",
@@ -213,15 +213,14 @@
         "to": "+17089270980"
       },
       "state": {
-        "nextRunAtMs": 1775732400000,
-        "lastRunAtMs": 1775646014005,
+        "nextRunAtMs": 1775818800000,
+        "lastRunAtMs": 1775732402099,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 22083,
+        "lastDurationMs": 35727,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 2,
-        "lastError": "Error: All models failed (2): openrouter/stepfun/step-3.5-flash:free: ⚠️ API rate limit reached. Please try again later. (rate_limit) | openrouter/openrouter/auto: ⚠️ openrouter (openrouter/auto) returned a billing error — your API key has run out of credits or has an insufficient balance. Check your openrouter billing dashboard and top up or switch to a different API key. (billing)",
-        "lastErrorReason": "rate_limit"
+        "consecutiveErrors": 3,
+        "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default."
       }
     },
     {
@@ -231,7 +230,7 @@
       "name": "Dale Cooper Evening Brief",
       "enabled": true,
       "createdAtMs": 1775170832881,
-      "updatedAtMs": 1775602874654,
+      "updatedAtMs": 1775689235740,
       "schedule": {
         "kind": "cron",
         "expr": "0 18 * * *",
@@ -250,14 +249,15 @@
         "to": "+17089270980"
       },
       "state": {
-        "nextRunAtMs": 1775689200000,
-        "lastRunAtMs": 1775602818698,
+        "nextRunAtMs": 1775775600000,
+        "lastRunAtMs": 1775689213232,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 55956,
+        "lastDurationMs": 22508,
         "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 1,
-        "lastError": "Error: No active WhatsApp Web listener (account: default). Start the gateway, then link WhatsApp with: openclaw channels login --channel whatsapp --account default."
+        "consecutiveErrors": 2,
+        "lastError": "Error: All models failed (2): openrouter/stepfun/step-3.5-flash:free: ⚠️ API rate limit reached. Please try again later. (rate_limit) | ollama/gemma4-e2b/latest: Unknown model: ollama/gemma4-e2b/latest. Ollama requires authentication to be registered as a provider. Set OLLAMA_API_KEY=\"ollama-local\" (any value works) or run \"openclaw configure\". See: https://docs.openclaw.ai/providers/ollama (model_not_found)",
+        "lastErrorReason": "model_not_found"
       }
     },
     {
