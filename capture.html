@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OpenBrain">
+<title>OpenBrain Capture</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    background: #0a0a0f;
+    color: #f0f0f5;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 16px) env(safe-area-inset-bottom, 20px) env(safe-area-inset-left, 16px);
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0 20px;
+  }
+
+  .logo { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+  .logo span { color: #7c6af5; }
+
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #3ddc84;
+    box-shadow: 0 0 6px #3ddc84;
+  }
+  .status-dot.offline { background: #ff6b6b; box-shadow: 0 0 6px #ff6b6b; }
+
+  .category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .cat-btn {
+    background: #1a1a2e;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 14px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: #ccc;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .cat-btn .icon { font-size: 24px; display: block; margin-bottom: 4px; }
+  .cat-btn.active {
+    border-color: #7c6af5;
+    background: #1e1640;
+    color: #fff;
+  }
+  .cat-btn:active { transform: scale(0.96); }
+
+  textarea {
+    width: 100%;
+    flex: 1;
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 16px;
+    color: #f0f0f5;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 16px;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    min-height: 120px;
+    margin-bottom: 12px;
+  }
+  textarea:focus { border-color: #7c6af5; }
+  textarea::placeholder { color: #555; }
+
+  .extra-fields { margin-bottom: 12px; display: none; }
+  .extra-fields.visible { display: block; }
+
+  .field-label {
+    font-size: 12px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"], select {
+    width: 100%;
+    background: #1a1a2e;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 12px;
+    color: #f0f0f5;
+    font-size: 15px;
+    padding: 12px 14px;
+    outline: none;
+    font-family: inherit;
+    margin-bottom: 10px;
+    -webkit-appearance: none;
+  }
+  input[type="text"]:focus, select:focus { border-color: #7c6af5; }
+  select option { background: #1a1a2e; color: #f0f0f5; }
+
+  .send-btn {
+    width: 100%;
+    background: #7c6af5;
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 8px;
+  }
+  .send-btn:active { transform: scale(0.97); background: #6a58e0; }
+  .send-btn:disabled { background: #444; color: #888; }
+
+  .note-btn {
+    width: 100%;
+    background: transparent;
+    color: #888;
+    border: 1.5px solid #2a2a4a;
+    border-radius: 16px;
+    font-size: 15px;
+    padding: 13px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .note-btn:active { background: #1a1a2e; }
+
+  .toast {
+    position: fixed;
+    bottom: calc(env(safe-area-inset-bottom, 20px) + 20px);
+    left: 50%; transform: translateX(-50%);
+    background: #3ddc84;
+    color: #000;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 100;
+  }
+  .toast.error { background: #ff6b6b; color: #fff; }
+  .toast.show { opacity: 1; }
+
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Open<span>Brain</span></div>
+  <div class="status-dot" id="statusDot"></div>
+</header>
+
+<div class="category-grid">
+  <button class="cat-btn active" data-cat="inbox" onclick="selectCat(this)">
+    <span class="icon">📥</span>Inbox
+  </button>
+  <button class="cat-btn" data-cat="interaction" onclick="selectCat(this)">
+    <span class="icon">🤝</span>Interaction
+  </button>
+  <button class="cat-btn" data-cat="idea" onclick="selectCat(this)">
+    <span class="icon">💡</span>Idea
+  </button>
+  <button class="cat-btn" data-cat="project" onclick="selectCat(this)">
+    <span class="icon">📁</span>Project
+  </button>
+  <button class="cat-btn" data-cat="person" onclick="selectCat(this)" style="grid-column: span 2;">
+    <span class="icon">👤</span>Person Note
+  </button>
+</div>
+
+<textarea id="captureText" placeholder="What's on your mind?" rows="4"></textarea>
+
+<div class="extra-fields" id="extraFields">
+  <div id="interactionFields" style="display:none">
+    <div class="field-label">Who was this with?</div>
+    <input type="text" id="personName" placeholder="Name">
+    <div class="field-label">Type</div>
+    <select id="interactionType">
+      <option>In Person</option>
+      <option>Phone Call</option>
+      <option>Text</option>
+      <option>Email</option>
+      <option>Meeting</option>
+      <option>Other</option>
+    </select>
+  </div>
+  <div id="ideaFields" style="display:none">
+    <div class="field-label">Category</div>
+    <select id="ideaCategory">
+      <option>Personal</option>
+      <option>Civic</option>
+      <option>Political</option>
+      <option>Professional</option>
+      <option>Technology</option>
+      <option>Other</option>
+    </select>
+  </div>
+</div>
+
+<button class="send-btn" id="sendBtn" onclick="sendCapture()">Capture</button>
+<button class="note-btn" onclick="saveNoteOnly()">Save to Notes only</button>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────
+const NOTION_TOKEN  = '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';
+const DB_INBOX       = 'cf9dd36dcd484f658016a73373b328a3';
+const DB_INTERACTIONS= '328f7d31fb0a49c28d87569f3811dd74';
+const DB_IDEAS       = '769d6d407abb45489455723fcf4b261f';
+const DB_PROJECTS    = '0b21e5e8d6b540248c500030e4fccf0f';
+const NOTION_API     = 'https://api.notion.com/v1/pages';
+const NOTION_VERSION = '2022-06-28';
+// ──────────────────────────────────────────────────────────
+
+let currentCat = 'inbox';
+
+function selectCat(btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentCat = btn.dataset.cat;
+
+  const extra = document.getElementById('extraFields');
+  const intF  = document.getElementById('interactionFields');
+  const ideaF = document.getElementById('ideaFields');
+
+  intF.style.display  = 'none';
+  ideaF.style.display = 'none';
+
+  if (currentCat === 'interaction') {
+    extra.classList.add('visible');
+    intF.style.display = 'block';
+  } else if (currentCat === 'idea') {
+    extra.classList.add('visible');
+    ideaF.style.display = 'block';
+  } else {
+    extra.classList.remove('visible');
+  }
+
+  const placeholders = {
+    inbox:       "What's on your mind?",
+    interaction: "What happened or what was said?",
+    idea:        "Describe the idea...",
+    project:     "Project note or task...",
+    person:      "Note about a person..."
+  };
+  document.getElementById('captureText').placeholder = placeholders[currentCat];
+}
+
+function showToast(msg, isError = false, duration = 2500) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '') + ' show';
+  setTimeout(() => t.classList.remove('show'), duration);
+}
+
+function setOnline(online) {
+  const dot = document.getElementById('statusDot');
+  dot.className = 'status-dot' + (online ? '' : ' offline');
+}
+
+async function notionPost(body) {
+  const res = await fetch(NOTION_API, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${NOTION_TOKEN}`,
+      'Content-Type': 'application/json',
+      'Notion-Version': NOTION_VERSION
+    },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `HTTP ${res.status}`);
+  }
+  return res.json();
+}
+
+function buildPayload(text) {
+  const now = new Date().toISOString();
+  const titleProp = (t) => ({ title: [{ text: { content: t } }] });
+  const richProp  = (t) => ({ rich_text: [{ text: { content: t } }] });
+
+  if (currentCat === 'interaction') {
+    return {
+      parent: { database_id: DB_INTERACTIONS },
+      properties: {
+        Summary:   titleProp(text),
+        Person:    richProp(document.getElementById('personName').value || ''),
+        Type:      { select: { name: document.getElementById('interactionType').value } },
+        Source:    { select: { name: 'iPhone Shortcut' } },
+        Date:      { date: { start: now } }
+      }
+    };
+  }
+
+  if (currentCat === 'idea') {
+    return {
+      parent: { database_id: DB_IDEAS },
+      properties: {
+        Title:    titleProp(text),
+        Category: { select: { name: document.getElementById('ideaCategory').value } },
+        Status:   { select: { name: 'Raw' } },
+        Captured: { date: { start: now } }
+      }
+    };
+  }
+
+  // inbox / project / person → all go to Inbox Log with Filed To tag
+  const filedTo = { inbox: 'Unclassified', project: 'Projects', person: 'People' }[currentCat] || 'Unclassified';
+  return {
+    parent: { database_id: currentCat === 'project' ? DB_PROJECTS : DB_INBOX },
+    properties: {
+      'Captured Text': titleProp(text),
+      Source:          { select: { name: 'iPhone Shortcut' } },
+      'Filed To':      { select: { name: filedTo } },
+      'Needs Review':  { checkbox: true },
+      Timestamp:       { date: { start: now } }
+    }
+  };
+}
+
+async function sendCapture() {
+  const text = document.getElementById('captureText').value.trim();
+  if (!text) { showToast('Please enter something first', true); return; }
+
+  const btn = document.getElementById('sendBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Sending…';
+
+  try {
+    await notionPost(buildPayload(text));
+    setOnline(true);
+    showToast('✓ Captured to Notion');
+    document.getElementById('captureText').value = '';
+    document.getElementById('personName').value = '';
+  } catch (e) {
+    setOnline(false);
+    // Fallback: save raw text to localStorage queue
+    const queue = JSON.parse(localStorage.getItem('ob_queue') || '[]');
+    queue.push({ cat: currentCat, text, ts: new Date().toISOString() });
+    localStorage.setItem('ob_queue', JSON.stringify(queue));
+    showToast('Offline — saved locally (' + queue.length + ' queued)', true, 4000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Capture';
+  }
+}
+
+function saveNoteOnly() {
+  const text = document.getElementById('captureText').value.trim();
+  if (!text) { showToast('Please enter something first', true); return; }
+  const queue = JSON.parse(localStorage.getItem('ob_queue') || '[]');
+  queue.push({ cat: currentCat, text, ts: new Date().toISOString() });
+  localStorage.setItem('ob_queue', JSON.stringify(queue));
+  showToast('Saved locally (' + queue.length + ' stored)');
+  document.getElementById('captureText').value = '';
+}
+
+// Check connectivity on load
+fetch('https://api.notion.com/v1/users/me', {
+  headers: { 'Authorization': `Bearer ${NOTION_TOKEN}`, 'Notion-Version': NOTION_VERSION }
+}).then(r => setOnline(r.ok)).catch(() => setOnline(false));
+</script>
+</body>
+</html>
